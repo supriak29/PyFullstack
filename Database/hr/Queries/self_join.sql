@@ -1,0 +1,18 @@
+# SELF JOIN
+
+# Sometimes it is useful to join a table to itself. This is known as self join.
+# We join a table to itself to evaluate the rows in the same table.
+
+# To perform the self join we use either inner join or left join.
+# Because the same table appears twice in a single query, we have to use the table aliases.
+
+##################################################################################
+
+
+#using inner join
+select e.first_name || ' ' || e.last_name as employee,
+m.first_name || ' ' || m.last_name as manager
+from employees employees
+inner join employees m 
+on m.employee_id = e.manager_id
+order by manager;

@@ -1,0 +1,26 @@
+# COMPARISON OPERATORS
+
+################# Equal to operator (=)
+
+select employee_id, first_name, last_name from employees where last_name="Himuro";
+
+# Below query will give empty table as output
+select employee_id, first_name, last_name, phone_number from employees where phone_number = NULL;
+# Correct query
+select employee_id, first_name, last_name, phone_number from employees where phone_number is NULL;
+
+################# Not Equal to (<>)
+select employee_id, first_name, last_name, department_id from employees where department_id <> 8 order by department_id;
+select employee_id, first_name, last_name, department_id from employees where department_id <> 8 and department_id <> 10 order by department_id;
+
+################# Greater than (>)
+select employee_id, first_name, last_name, department_id from employees where department_id > 8 order by department_id;
+
+################# Less than (<)
+select employee_id, first_name, last_name, department_id from employees where department_id < 8 order by department_id;
+
+################# Greater than Equal to (>=)
+select employee_id, first_name, last_name, department_id from employees where department_id >= 8 order by department_id;
+
+################# Less than Equal to (<=)
+select employee_id, first_name, last_name, department_id from employees where department_id <= 8 order by department_id;

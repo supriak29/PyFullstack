@@ -1,0 +1,53 @@
+# INNER JOIN
+
+# Inner join means intersection between two tables.
+
+# Each employee holds one job while a job maybe held by many employees.
+# The relationship between the jobs and employees is one to many.
+
+# Using SQL INNER JOIN to join 2 tables. 
+# We will use employees & departments table from sample of database that we have.
+
+# Each employee belongs to one and only one department while each department can have more than one employee.
+# Relationship between departments and employees is one to many.
+#########################################################################################
+
+# To get the information of the department id 1,2,3 we use the below query -
+select department_id, department_name
+from departments
+where department_id in (1,2,3);
+
+# To get the information of the employee who works in the department id 1,2,3 we use below query -
+select first_name, last_name, department_id
+from employees
+where department_id in (1,2,3)
+order by department_id;
+
+# To get the combined data from the employees & department names, we use INNER JOIN clause as below -
+select first_name, last_name, employees.department_id, departments.department_name 
+from employees inner join departments
+on departments.department_id = employees.department_id
+where employees.department_id in (1,2,3);
+
+#################
+
+# SQL INNER JOIN using 3 tables
+
+# Join 3 tables employees, departments & jobs to get the first_name, last_name, job_title & department_id of employees who work in 
+# department 1,2,3.
+
+select first_name, last_name, jobs.job_title, departments.department_id
+from employees inner join jobs inner join departments
+on departments.department_id = employees.department_id and jobs.job_id = employees.job_id
+where employees.department_id in (1,2,3);
+
+select first_name, last_name, jobs.job_title, departments.department_id
+from employees inner join departments inner join jobs
+on departments.department_id = employees.department_id and jobs.job_id = employees.job_id
+where employees.department_id in (1,2,3);
+
+######################################################################################
+select first_name, last_name, jobs.job_title, departments.department_id
+from employees inner join departments inner join jobs
+on departments.department_id = employees.department_id and jobs.job_id = employees.job_id
+where departments.department_id in (1,2,3);

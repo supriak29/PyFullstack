@@ -1,0 +1,46 @@
+BEGIN:VCALENDAR
+PRODID:-//zoom.us//iCalendar Event//EN
+VERSION:2.0
+CALSCALE:GREGORIAN
+METHOD:PUBLISH
+CLASS:PUBLIC
+BEGIN:VTIMEZONE
+TZID:Asia/Kolkata
+LAST-MODIFIED:20220317T223602Z
+TZURL:http://tzurl.org/zoneinfo-outlook/Asia/Kolkata
+X-LIC-LOCATION:Asia/Kolkata
+BEGIN:STANDARD
+TZNAME:IST
+TZOFFSETFROM:+0530
+TZOFFSETTO:+0530
+DTSTART:19700101T000000
+END:STANDARD
+END:VTIMEZONE
+BEGIN:VEVENT
+DTSTAMP:20220613T023342Z
+DTSTART;TZID=Asia/Kolkata:20220613T090000
+DTEND;TZID=Asia/Kolkata:20220613T160000
+SUMMARY:Python Full Stack Development Cohort- C602
+RRULE:FREQ=DAILY;WKST=SU;UNTIL=20220715T103000;INTERVAL=1
+UID:ZOOM82581708923
+TZID:Asia/Kolkata
+DESCRIPTION:Systematic Trainings is inviting you to a scheduled Zoom meet
+ ing.\n\nJoin Zoom Meeting\nhttps://us06web.zoom.us/j/82581708923?pwd=WlR
+ uRUpGR2p2QjdTdUhUcGkvV0xsdz09\n\nMeeting ID: 825 8170 8923\nPasscode: 51
+ 1742\nOne tap mobile\n+13017158592\,\,82581708923#\,\,\,\,*511742# US (W
+ ashington DC)\n+13126266799\,\,82581708923#\,\,\,\,*511742# US (Chicago)
+ \n\nDial by your location\n        +1 301 715 8592 US (Washington DC)\n 
+        +1 312 626 6799 US (Chicago)\n        +1 346 248 7799 US (Houston
+ )\n        +1 646 558 8656 US (New York)\n        +1 720 707 2699 US (De
+ nver)\n        +1 253 215 8782 US (Tacoma)\nMeeting ID: 825 8170 8923\nP
+ asscode: 511742\nFind your local number: https://us06web.zoom.us/u/kdUtq
+ ubns1\n\n
+LOCATION:https://us06web.zoom.us/j/82581708923?pwd=WlRuRUpGR2p2QjdTdUhUcG
+ kvV0xsdz09
+BEGIN:VALARM
+TRIGGER:-PT10M
+ACTION:DISPLAY
+DESCRIPTION:Reminder
+END:VALARM
+END:VEVENT
+END:VCALENDAR
