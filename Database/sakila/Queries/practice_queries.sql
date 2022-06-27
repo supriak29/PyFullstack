@@ -168,6 +168,8 @@ and (select language_id from language where name = "english");
 
 # 7b. Use subqueries to display all actors who appear in the film Alone Trip.
 select film_id, title from film where title = "Alone Trip";
+select actor_id, film_id from film_actor where film_id = 17;
+select actor_id as "Actor ID", concat(first_name,"  ", last_name) as "Actor Names" from actor;
 
 select first_name, last_name from actor where (select title from film where title = "Alone Trip");
 
