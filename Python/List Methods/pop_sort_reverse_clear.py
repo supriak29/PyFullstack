@@ -4,7 +4,12 @@
 # to remove the elements from last we use pop()
 
 a = [3746, 233434,678563263,43,768,342,45.43]
-print(a)
+
+print("List: ",a)
+x = a.pop(0)
+print("After Pop along with index: ",x)
+
+print("List after pop: ",a)
 print()
 
 print(a.pop())
