@@ -1,15 +1,18 @@
 # python provides the "readlines()", method, it is used for reading lines
 
-# open file with "r" mode
-
-##with open("akbar_birbal.txt","r") as f:
+### open file with "r" mode
+##
+##with open("princess_diaries.txt","r") as f:
 ##    content = f.readlines()
 ##    print(content)
+##    print()
+
 
 ### file pointer position
-##with open("akbar_birbal.txt","r") as f:
+##with open("princess_diaries.txt","r") as f:
 ##    print("The file pointer is at: ",f.tell())
 ##    content = f.read(50)
+##    print(content)
 ##    print("The file position is at: ",f.tell())
 
 # set the pointer location
@@ -19,8 +22,7 @@
 # from = 0: it refers the beginning of the file
 # from = 1: the current position
 # from = 2: the end of the pointer is used as reference
-
-with open("AkbarBirbal.docx",'rb') as f:
+with open("princess_diaries.txt",'r') as f:
     print("The file pointer is at: ",f.tell())
     f.seek(10)
     print("The file pointer is at: ",f.tell())

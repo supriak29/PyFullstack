@@ -1,0 +1,10 @@
+create table ttwc(
+srno int primary key auto_increment,
+dateofMatch date,
+Team1Name varchar(50),
+Team1Captain varchar(50),
+Team2Name varchar(50),
+Team2Captain varchar(50),
+location varchar(50),
+toss_win int,
+match_win int);

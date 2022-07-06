@@ -1,0 +1,25 @@
+#to drop table use - 
+drop table user
+
+# creating database
+>>create database usermanagement;
+
+>>use usermanagement;
+
+create table user(
+fname varchar(50) not null,
+lname varchar(50),
+username varchar(10) not null,
+email varchar(50) not null,
+mobile int not null,
+password varchar(20) not null,
+reg_date date not null,
+primary key(username),
+unique(username,email,mobile)
+);
+
+>>show tables;
+
+>>desc register;
+
+

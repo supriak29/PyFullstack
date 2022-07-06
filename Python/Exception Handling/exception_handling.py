@@ -26,9 +26,9 @@
 try:
     f = open("myfile.txt","w")
     a,b = [int(x) for x in input("Enter two numbers: ").split()]
-#   a.append(b)
+    a.append(b)
     c = a/b
-#   f.write(f'Writing(c) into myfile')
+    f.write(f'Writing(c) into myfile')
 
 ## except blocks are also called handlers
 except ZeroDivisionError:
@@ -38,14 +38,14 @@ except ZeroDivisionError:
 except AttributeError:
     print("Attribute Not Supported. Attributed Error")
 
-#except ValueError:
-#   print("Please enter values seperated by space")
+except ValueError:
+   print("Please enter values seperated by space")
 
-#except IOError:
-#   print("User stopped the program")
+except IOError:
+   print("User stopped the program")
 
-#except KeyboardInterrupt:
-#   print("User stopped the program")
+except KeyboardInterrupt:
+   print("User stopped the program")
 
 #finally block will always
 finally:

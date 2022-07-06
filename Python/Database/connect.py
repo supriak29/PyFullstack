@@ -8,15 +8,20 @@
 
 # importing mysql connection library
 import mysql.connector
-
-def userConnect(h,u,db,pwd):
-    con = mysql.connector.connect(h,u,db,pwd)
-    con.close()
-    print("Connection Established")
+from mysql.connector import Error
 
 h = input("Enter host name: ")
 u = input("Enter username: ")
 db = input("Enter database name: ")
 pwd = input("Enter password: ")
 
-userConnect(h,u)
+try:
+    con = mysql.connector.connect(host=h,user=u,database=db,password=pwd)
+
+    if con.is_connected():
+        print("Connection Established")
+
+    con.close()
+    
+except Error as e:
+    print(e)
