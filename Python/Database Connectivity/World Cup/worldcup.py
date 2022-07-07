@@ -17,7 +17,7 @@ values (%s,%s,%s,%s,%s,%s)"""
     con.commit()
 
 def updateData():
-    viewData()
+#    viewData()
     srno = input("Which srno do you wanna modify:")
     select_query="select * from ttwc where srno = %s"
     cur.execute(select_query, (srno,))

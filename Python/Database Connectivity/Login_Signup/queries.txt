@@ -1,0 +1,36 @@
+#to drop table use - 
+drop table user
+
+# creating database
+>>create database usermanagement;
+
+>>use usermanagement;
+
+create table user(
+fname varchar(50) not null,
+lname varchar(50),
+username varchar(10) not null,
+email varchar(50) not null,
+mobile int(10) not null,
+password varchar(20) not null,
+reg_date date not null,
+primary key(email),
+unique(username,email,mobile)
+);
+
+>>show tables;
+
+>>desc register;
+
+-------------------------------------------------
+
+insert into user(fname,lname,username,email,mobile,password)
+values("Supriya","Karkera","supria29","supria@gmail.com",7836282638,"password1234");
+
+---------------------------------------------------
+
+>> alter table user modify password varchar(255);
+
+-------------------------------------------------
+
+>> delete from user where email="supriyakarkera29@gmail.com";

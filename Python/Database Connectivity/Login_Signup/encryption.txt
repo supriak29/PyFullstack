@@ -1,0 +1,28 @@
+-------- IN COMMAND PROMPT ------------
+
+> py
+> import bcrypt
+
+>>> password = b"abc123"
+>>> hashed = bcrypt.hashpw(password,bcrypt.gensalt())
+>>> hashed
+>>> pwd = bcrypt.checkpw(password,hashed)
+>>> pwd
+
+>>> if bcrypt.checkpw(password,hashed):
+...	print("Password Matched!")
+...else:
+...	print("Wrong Password!")
+...
+Passwords Matched!
+>>>
+
+###############################################################
+------ IN PYTHON SHELL ----------
+
+> a="supriya"
+> type(a)
+> b=bytes(a,'utf-8')
+> type(b)
+> b
+

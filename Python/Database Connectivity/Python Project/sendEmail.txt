@@ -1,0 +1,68 @@
+import smtplib
+
+sender = 'from@fromdomain.com'
+receivers = ['to@todomain.com']
+
+message = """From: From Person <from@fromdomain.com>
+To: To Person <to@todomain.com>
+Subject: SMTP e-mail test
+
+This is a test e-mail message.
+"""
+
+try:
+   smtpObj = smtplib.SMTP('localhost')
+   smtpObj.sendmail(sender, receivers, message)         
+   print "Successfully sent email"
+except SMTPException:
+   print "Error: unable to send email"
+
+-------------------------------------------------
+*********** EXAMPLE ***************
+
+sender = 'supriyakarkera29@gmail.com' # sender's email id
+receivers = [email] # receiver's email id
+message = """From: From Person 		<supriyakarkera29@gmail.com>
+             To: {} <{}>
+             Subject: SMTP e-mail test
+
+             This is a test e-mail message.
+             The user: {} has been successfully registered!
+           """.format(fname,email,username)
+ try:
+                    smtpObj = smtplib.SMTP('localhost')
+                    smtpObj.sendmail(sender, receivers, message)         
+                    print("Successfully sent email")
+                except Exception as e:
+                    print("Error: unable to send email")
+
+
+-------------------------------------------------
+
+import smtplib
+from email.mime.multipart import MIMEMultipart
+from email.mime.text import MIMEText
+
+msg = MIMEMultipart()
+msg['From'] = 'supriyakarkera29@gmail.com'
+msg['To'] = 'supria29.k@gmail.com'
+msg['Subject'] = 'simple email in python'
+message = 'here is the email'
+msg.attach(MIMEText(message))
+
+mailserver = smtplib.SMTP('smtp.mailtrap.io',465)
+# identify ourselves to smtp gmail client
+mailserver.ehlo()
+# secure our email with tls encryption
+mailserver.starttls()
+# re-identify ourselves as an encrypted connection
+mailserver.ehlo()
+mailserver.login('4a02cd1127338d', '0b937d713f0ae3')
+
+mailserver.sendmail('supriyakarkera29@gmail.com','supria29.k@gmail.com',msg.as_string())
+
+mailserver.quit()
+
+--------------------------------------------------
+
+mailtrap.io
