@@ -1,12 +1,19 @@
-#to drop table use - 
-drop table user
 
-# creating database
+**** Delete TABLE user **** 
+
+>> drop table user;
+
+----------------------------------------------------
+**** CREATE DATABASE - usermanagement ****
+
 >>create database usermanagement;
 
 >>use usermanagement;
 
-create table user(
+-----------------------------------------------------
+**** CREATE TABLE - user ****
+
+>> create table user(
 fname varchar(50) not null,
 lname varchar(50),
 username varchar(10) not null,
@@ -18,19 +25,25 @@ primary key(email),
 unique(username,email,mobile)
 );
 
+------------------------------------------------------
+
 >>show tables;
 
 >>desc register;
 
 -------------------------------------------------
+**** INSERT INTO TABLE user *****
 
-insert into user(fname,lname,username,email,mobile,password)
+>> insert into user(fname,lname,username,email,mobile,password)
 values("Supriya","Karkera","supria29","supria@gmail.com",7836282638,"password1234");
 
 ---------------------------------------------------
+**** changing the datatype of password column  ****
 
 >> alter table user modify password varchar(255);
 
 -------------------------------------------------
+
+**** DELETE a single row from table ****
 
 >> delete from user where email="supriyakarkera29@gmail.com";
