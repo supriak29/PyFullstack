@@ -7,6 +7,7 @@ from email.mime.text import MIMEText
 #from Registration import register
 from Update import updateData
 #from Login import login
+from passwordVerify import pwdVerify
 from View import viewData
 
 con = pymysql.connect(host="localhost",user="root", password="",
@@ -16,21 +17,19 @@ cur = con.cursor()
 # ----------------------------------------------
 
 def register():
-
     fname = input("Enter first name: ")
     lname = input("Enter last name: ")
     username = input("Enter username: ")
     email = input("Enter email id: ")
     mobile = input("Enter mobile number: ")
-    pwd = bytes(input("Enter password: "),'utf-8')
-    cpwd = bytes(input("Confirm password: "),'utf-8')
     date = input("Enter date(yyyy-mm-dd): ")
+    pwd = input("Enter password: ")
+    cpwd = input("Confirm password: ")
 
     fname = fname.title()
     lname = lname.title()
     
     if "@gmail.com" in email:
-        print("Valid Email")
         user_info = (fname,lname,username,email,mobile,pwd,date)
 
     ### select the row having that particular email id
@@ -43,8 +42,12 @@ def register():
             if emailD is not None:
                 print("User already Exists!")
         except Exception as e:
-            # when user is not yet signed up, proceed with registration below: 
-            if pwd==cpwd:
+            # when user is not yet signed up, proceed with registration below:
+            # check if password is valid or not
+            p = pwdVerify(pwd,cpwd)
+            pwd = bytes(p,'utf-8')
+            print("Password on main screen: ",pwd)
+            if pwd is not None:
                 #converting into hash value
                 hashpwd = bcrypt.hashpw(pwd,bcrypt.gensalt())
                 insert_query = """insert into user
@@ -112,33 +115,32 @@ def register():
         
 # ----------------------------------------------
 
-def login():
-    email = input("Enter Email id: ")
-    password = input("Enter Password: ")
-
-    password = password
-    
-    # checking if the user already exists using email id
-    try:
-        select_query = "select * from user where email=%s"
-        cur.execute(select_query,(email,))
-        fname,lname,username,emailD,mobile,pwdD,reg_date = cur.fetchone()
-        print(pwdD)
-        print(password)
-##        try:
-##            a = bcrypt.checkpw(password,hashed)
-##            print(a)
-##        except Exception e:
-##            print("Exception after bcrypt")
+##def login():
+##    email = input("Enter Email id: ")
+##    password = input("Enter Password: ")
 ##
-        if emailD is not None:
-            if pwdD == password:
-                print("\nLogged in successfullly!\n")
-            else:
-                print("Wrong Password")
-    except Exception as e:
-        print("You are not Registered! Please Signup.")
-
+##    password = password
+##    
+##    # checking if the user already exists using email id
+##    try:
+##        select_query = "select * from user where email=%s"
+##        cur.execute(select_query,(email,))
+##        fname,lname,username,emailD,mobile,pwdD,reg_date = cur.fetchone()
+##        print(pwdD)
+##        print(password)
+####        try:
+####            a = bcrypt.checkpw(password,hashed)
+####            print(a)
+####        except Exception e:
+####            print("Exception after bcrypt")
+####
+##        if emailD is not None:
+##            if pwdD == password:
+##                print("\nLogged in successfullly!\n")
+##            else:
+##                print("Wrong Password")
+##    except Exception as e:
+##        print("You are not Registered! Please Signup.")
 
 
 # ----------------------------------------------

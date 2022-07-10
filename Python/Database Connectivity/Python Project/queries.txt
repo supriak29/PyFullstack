@@ -6,9 +6,9 @@
 ----------------------------------------------------
 **** CREATE DATABASE - usermanagement ****
 
->>create database usermanagement;
+>> create database usermanagement;
 
->>use usermanagement;
+>> use usermanagement;
 
 -----------------------------------------------------
 **** CREATE TABLE - user ****
@@ -19,7 +19,7 @@ lname varchar(50),
 username varchar(10) not null,
 email varchar(50) not null,
 mobile int(10) not null,
-password varchar(20) not null,
+password varchar(255) not null,
 reg_date date not null,
 primary key(email),
 unique(username,email,mobile)
