@@ -1,11 +1,13 @@
-from ast import parse
+#from ast import parse
 from flask import Flask, request
 from flask_restful import Resource, Api, reqparse
 from flask_jwt import JWT, jwt_required
-from pkg_resources import require
-
-
+#from pkg_resources import require
+from user import UserRegister
 from security import authenticate, identity
+
+
+
 
 app = Flask(__name__)
 app.secret_key = 'supriya'
@@ -14,11 +16,12 @@ api = Api(app)
 
 jwt = JWT(app, authenticate, identity)
 
+
 items = []
 
 class Item(Resource):
     # check if the single item is present and return if present
-    #@jwt_required()
+    @jwt_required()
     def get(self):
         data = request.get_json()
         item = next( filter(lambda x: x['name']==data['name'], items), None)
@@ -85,8 +88,10 @@ class ItemList(Resource):
 
 #api.add_resource(Item,'/item/<string:name>') # http://127.0.0.1:5000/student/Supriya
 api.add_resource(Item,'/item')
-
 api.add_resource(ItemList,'/items')
+
+api.add_resource(UserRegister,'/register') 
+
 
 # app.run(port=5000) # here, debug is off. it won't show us errors if any
 app.run(port=5000, debug=True) # we want to see errors if any, therefore debug=True

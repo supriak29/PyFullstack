@@ -1,5 +1,7 @@
-##Q) Create a class for Patient Appointmentwith the methods of 
-##    (i) Booking an appointment
+##Q) Create a class for Patient Appointmentwith the methods of 
+
+##    (i) Booking an appointment
+
 ##    (ii) Calling the patient
 
 ###############################################################################
