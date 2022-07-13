@@ -1,0 +1,57 @@
+*** CMD ***
+
+# Open path where you have saved flask modules:
+# E:\Personal Notes - Python Fullstack\Python\Flask Module\
+
+# creating virtual environment
+> pip list
+> python -m venv .
+
+# entering into virtual environment
+> Scripts\activate
+
+> pip install flask
+> pip list
+
+# to come out of virtual environment
+> Script\deactivate 
+
+> pip install Flask_restful
+
+# start the virtual environment again
+> Script\activate
+----------------------------------------------- 
+
+**** main.py ****
+
+# to run the code, write the below command in cmd terminal:
+> py main.py
+------------------------------------------------
+
+**** postman ****
+
+# create 2 new folders - "Store Api" & "Resource Student"
+# Transfer previouly created files into "Store Api"
+
+# add a request[POST] - Create new item: {{url}}/item/Supriya
+{
+  "name":"bread",
+  "price":20
+}
+
+# add a request[GET] - Get Item: {{url}}/item/sugar
+# add a request[GET] - Get all items: {{url}}/items
+
+----------------------------------------------------------
+
+**** CMD *****
+
+# enter into virtual environment
+> Scripts\activate
+
+> pip install Flask-JWT
+
+-------------------------------------------------------------
+
+**** security.py ****
+**** user.py ****
