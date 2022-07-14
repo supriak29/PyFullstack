@@ -5,7 +5,9 @@ HTTP Verbs
 3. PUT: Make sure something is there to update
 4. DELETE: Remove something
 
---------------------------------------
+
+############################################################
+
 
 DATE: 12/7/22 :    *** TASK ***
 
@@ -52,3 +54,12 @@ DATE: 12/7/22 :    *** TASK ***
     "shipping":"Delhi",
     "returnable": "No"
 }
+
+
+####################################################
+
+DATE: 14/07/22
+
+1. Take arguments from request(name, price)
+2. check in DB (do not need the repeated items in DB)
+3. Add if does not already exist

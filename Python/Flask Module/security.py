@@ -7,13 +7,13 @@ from user import User
 
 # # mapping through username
 # username_mapping = {u.username: u for u in users}
+
 # # mapping through user id
 # userid_mapping = {u.id: u for u in users}
 
-
 def authenticate(username, password):
-    #user = username_mapping.get(username,None)
-    #if user and user.password==password:
+    #user = username_mapping.get(username,None)  # if the username is not there after checking usermapping, then None is assigned to user 
+    #if user and user.password==password: 
     user = User.findUsername(username)
     if user and hmac.compare_digest(user.password, password):
         return user

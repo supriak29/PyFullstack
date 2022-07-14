@@ -1,12 +1,8 @@
-#from typing_extensions import Required
 from flask_restful import Resource, reqparse
-#from multiprocessing import connection
-#from sqlite3 import connect
 import sqlite3
 from dbConfig import DatabaseConfig
 
-#from colorama import Cursor
-
+print("This is from user.py: ",__name__)
 ###########################################################################
 
 # has no direct link with API

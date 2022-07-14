@@ -1,0 +1,91 @@
+
+{
+    "country": "India",
+    "city": "Mumbai",
+    "metric": "Thunderstrom",
+    "temperature": "27°C | 81°F",
+    "humidity": "94%",
+    "precipitation": "24%",
+    "wind": "21 km/h",
+    "uvindex": "6",
+    "sunrise": "6:09 am",
+    "sunset": "7:20 pm",
+    "day": "Friday",
+    "date": "25th July, 2022 (IST)"
+}
+
+{
+    "country": "Japan",
+    "city": "Tokyo",
+    "metric": "Cloudy",
+    "temperature": "23°C | 74°F",
+    "humidity": "99%",
+    "precipitation": "40%",
+    "wind": "5 km/h",
+    "uvindex": "4",
+    "sunrise": "4:37 am",
+    "sunset": "6:58 pm",
+    "day": "Friday",
+    "date": "15th July, 2022 (GMT+9)"
+}
+
+{
+    "country": "Kenya",
+    "city": "Nairobi",
+    "metric": "Mostly Cloud",
+    "temperature": "17°C | 62°F",
+    "humidity": "77%",
+    "precipitation": "6%",
+    "wind": "11 km/h",
+    "uvindex": "6",
+    "sunrise": "6:37 am",
+    "sunset": "6:40 pm",
+    "day": "Friday",
+    "date": "15th July, 2022 (GMT+3)"
+}
+
+{
+    "country": "Canada",
+    "city": "Toronto",
+    "metric": "Partly cloud",
+    "temperature": "24°C | 76°F",
+    "humidity": "52%",
+    "precipitation": "10%",
+    "wind": "11 m/h",
+    "uvindex": "moderate",
+    "sunrise": "5:50 am",
+    "sunset": "8:57 pm",
+    "day": "Friday",
+    "date": "25th July, 2022 (GMT-4)"
+}
+
+
+{
+    "country": "Colorado, U.S.A",
+    "city": "Denver",
+    "metric": "Partly Cloud",
+    "temperature": "34°C | 94°F",
+    "humidity": "17%",
+    "precipitation": "15%",
+    "wind": "4 km/h",
+    "uvindex": "3.6 (moderate)",
+    "sunrise": "5:45 am",
+    "sunset": "8:28 pm",
+    "day": "Friday",
+    "date": "14th July, 2022 (GMT-6)"
+}
+
+{
+    "country": "UAE",
+    "city": "Dubai",
+    "metric": "Clear with periodic clouds",
+    "temperature": "36°C | 97°F",
+    "humidity": "52%",
+    "precipitation": "1%",
+    "wind": "6 m/h",
+    "uvindex": "10",
+    "sunrise": "5:38 am",
+    "sunset": "7:12 pm",
+    "day": "Friday",
+    "date": "15th July, 2022 (GMT+4)"
+}
