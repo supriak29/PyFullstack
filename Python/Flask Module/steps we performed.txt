@@ -1,0 +1,5 @@
+DATE: 14/07/22
+
+1. Take arguments from request(name, price)
+2. check in DB (do not need the repeated items in DB)
+3. Add if does not already exist

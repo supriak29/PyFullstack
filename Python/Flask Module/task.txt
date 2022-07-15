@@ -1,0 +1,45 @@
+DATE: 12/7/22 :    *** TASK ***
+
+>>> Libaray - follow all steps given below, but for a book : 
+
+1. created a class - for book:
+                                author, 
+                                title, 
+                                hardcover/paperback, 
+                                used/new, 
+                                discount, 
+                                shipping address, 
+                                price, 
+                                returnable.
+2. created an empty list of items
+3. started performing CRUD operations on items list
+4. created a get method - to get all elements from the list
+5. method for - getting single element out of the list
+6. method for creating a new element in the list
+7. method for - updating the elements in the list
+8. method for - deleting single element in the list
+
+
+-----------------------------------------
+
+{
+    "title":"Matilda",
+    "author":"Roald Dahl",
+    "cover":"HardCover",
+    "used":"Not used",
+    "price": 150,
+    "discount": "5%",
+    "shipping":"Mumbai",
+    "returnable": "Yes"
+}
+
+{
+    "title":"Pride and Prejudice",
+    "author":"Jane Austin",
+    "cover":"Paperback",
+    "used":"Used",
+    "price": 100,
+    "discount": "10%",
+    "shipping":"Delhi",
+    "returnable": "No"
+}

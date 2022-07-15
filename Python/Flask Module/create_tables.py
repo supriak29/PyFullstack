@@ -11,16 +11,6 @@ cursor.execute(createTable)
 createTable = "CREATE TABLE IF NOT EXISTS items(name text, price float)"
 cursor.execute(createTable)
 
-#cursor.execute("INSERT INTO weather_stats VALUES('India','Mumbai','Light Drizzle','95%', '27°C', '94%','18km/h')")
-
 connection.commit()
 connection.close()
 
-#############################
-# country
-# city
-# weather stats - metric
-# temp °C
-# humidity %
-# precipitation %
-# wind %

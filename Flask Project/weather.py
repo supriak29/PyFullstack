@@ -31,20 +31,7 @@ class Weather(Resource):
         required=False,
         help='This field is optional'
     )
-
-    # check if the record for single city is present and return if present
-    def get(self):
-        ''''
-            This method fetches a single record on the basis of city requested by the user.
-            This get() method shows the fetched data, depending on the city
-        '''
-        data = Weather.parser.parse_args()       # taking the request through parser, weather stats for a city
-        wstat = self.findItem(data['city'])      # find if the required city is there in database    
-        if wstat:                                # if the city is found: 
-            return wstat                         # then return details regarding the requested city
-        return {'message': 'Search not found'}, 404     # else return message
-   
-   
+      
     @classmethod                 # class method can be accessed throughout the class anywhere, unlike post,get,delete,update methods
     def findItem(cls, city):     # takes city as parameter
         '''
@@ -115,6 +102,18 @@ class Weather(Resource):
         connection.commit() # commit changes
         connection.close()  # close connection
 
+    # check if the record for single city is present and return if present
+    def get(self):
+        ''''
+            This method fetches a single record on the basis of city requested by the user.
+            This get() method shows the fetched data, depending on the city
+        '''
+        data = Weather.parser.parse_args()       # taking the request through parser, weather stats for a city
+        wstat = self.findItem(data['city'])      # find if the required city is there in database    
+        if wstat:                                # if the city is found: 
+            return wstat                         # then return details regarding the requested city
+        return {'message': 'Search not found'}, 404     # else return message
+
 
     @jwt_required()
     def post(self):
@@ -125,16 +124,14 @@ class Weather(Resource):
             In this method, request is taken through .get_json() instead of parse.
             Reason: parse allows only 2 arguments in this case: country & city
                   :  we need more than 2 parameteres,
-                  :  to avoid too many loc 
+                  :  to reduce loc 
         '''
-        data = request.get_json()   
+        data = request.get_json()   # takes the incoming json request & converts it into dictionary
 
         if self.findItem(data['city']):     # find if the city is present in the database
             # if city found in db, then we do not have to again post into db
             return {'message':"Data for city with name '{}' already exists.".format(data['city'])}, 400
         
-        
-        # creating an object: wstat
         wstat = {
                 'country': data['country'],
                 'city': data['city'],
@@ -176,7 +173,7 @@ class Weather(Resource):
         return {"message": "City requested to be deleted does not exist in the database"}
 
     
-    # # update list
+    # # update 
     @jwt_required()
     def put(self):
         ''''

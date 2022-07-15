@@ -1,5 +1,5 @@
 import hmac
-from user import User
+from modules.user import UserModule
 
 # users = [ 
 #     User(1, 'user1','pass1') 
@@ -14,11 +14,11 @@ from user import User
 def authenticate(username, password):
     #user = username_mapping.get(username,None)  # if the username is not there after checking usermapping, then None is assigned to user 
     #if user and user.password==password: 
-    user = User.findUsername(username)
+    user = UserModule.findUsername(username)
     if user and hmac.compare_digest(user.password, password):
         return user
 
 
 def identity(payload):
     user_id = payload['identity']
-    return User.findId(user_id)
+    return UserModule.findId(user_id)

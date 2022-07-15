@@ -7,7 +7,8 @@ from dbConfig import DatabaseConfig
 # has no direct link with API
 class User:
     def __init__(self, _id, username, password):
-        self.id = _id
+        # initializing instance variables (self.id, self.username, self.password) of class User
+        self.id = _id   
         self.username = username
         self.password = password
     
@@ -87,3 +88,20 @@ class RegisterUser(Resource):
         connection.commit()
         connection.close()
         return {"message": "User created successfully!"}, 201
+
+    def get(self):
+        connection, cursor = DatabaseConfig('weatherDB').createConnection()
+        
+        query = "SELECT * FROM users_cred"
+        result = cursor.execute(query)
+    
+        users = []
+        for row in result:
+            users.append( {  
+                               'username':row[1],
+                               'password': row[2]
+                    }
+                )
+
+        connection.close()
+        return {'Registered Users': users}

@@ -23,6 +23,8 @@ def register():
     email = input("Enter email id: ")
     mobile = input("Enter mobile number: ")
     date = input("Enter date(yyyy-mm-dd): ")
+##    pwd = bytes(input("Enter password: "),'utf-8')
+##    cpwd = bytes(input("Confirm password: "),'utf-8')
     pwd = input("Enter password: ")
     cpwd = input("Confirm password: ")
 
@@ -44,9 +46,9 @@ def register():
         except Exception as e:
             # when user is not yet signed up, proceed with registration below:
             # check if password is valid or not
-            p = pwdVerify(pwd,cpwd)
-            pwd = bytes(p,'utf-8')
-            print("Password on main screen: ",pwd)
+            pwd = pwdVerify(pwd,cpwd)
+            print(pwd)
+           # pwd = bytes(p,'utf-8')
             if pwd is not None:
                 #converting into hash value
                 hashpwd = bcrypt.hashpw(pwd,bcrypt.gensalt())
@@ -109,7 +111,7 @@ def register():
                     print("3 attempts over! Code expired!")
                 
             else:
-                print("Password does not match.")
+                print("Invalid password")
     else:
         print("Not a Valid Email")
         
