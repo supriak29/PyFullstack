@@ -20,8 +20,7 @@ def register():
     lname = lname.title()
     
     if "@gmail.com" in email:
-        print("Valid Email")
-
+        
         user_info = (fname,lname,username,email,mobile,pwd,date)
     ##
     ##
@@ -49,3 +48,5 @@ def register():
                 print("Password does not match.")
     else:
         print("Not a Valid Email")
+
+register()
