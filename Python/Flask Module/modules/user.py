@@ -29,8 +29,6 @@ class UserModule:
     # finding through id
     @classmethod
     def findId(cls, _id):
-        print("This is id: ",_id)
-        print("This is type of id: ",type(_id))
         connection = sqlite3.connect('data.db')
         cursor = connection.cursor()
 

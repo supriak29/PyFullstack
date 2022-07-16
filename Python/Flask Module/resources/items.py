@@ -38,7 +38,7 @@ class Item(Resource):
         data = Item.parser.parse_args()
         item = ItemModule.findItem(data['name'])
         if item:
-            return item
+            return item.json()
         return {'message': 'Item not found1'}, 404
 
         # data = request.get_json()
@@ -88,11 +88,12 @@ class Item(Resource):
             return {'message':"An item with name '{}' already exists.".format(data['name'])}, 400
         
         # creating an object: item
-        item = {'name':data['name'], 'price':data['price']}
+        item = ItemModule(name:data['name'], price:data['price'])
         
         try:
             # calling the class method insert
-            ItemModule.insert(item)
+            # ItemModule.insert(item)
+            item.insert()
         except:
             return{"message": "An error occurred while inserting item"}, 500
         return item, 201
@@ -132,23 +133,23 @@ class Item(Resource):
     # update list
     @jwt_required()
     def put(self):
-        connection, cursor = DatabaseConfig('data').createConnection()
         data =  Item.parser.parse_args()
-        item = {'name':data['name'], 'price':data['price']}
+        item = ItemModule.findItem(data['name'])
+        updatedItem = ItemModule(name=data['name'], price=data['price'])
         
-        if ItemModule.findItem(data['name']):
+        if item is None:
             try:
-                ItemModule.update(item)
+                updatedItem.insert(updatedItem)
                 return {"message": "Database updated"}
             except:
                 return{"message": "An error occurred while inserting item"}, 500
         else:
             try:
-                ItemModule.insert(item)
+                updatedItem.update(updatedItem)
                 return {"message": "Database updated"}
             except:
                 return{"message": "An error occurred while inserting item"}, 500
-
+        return updatedItem.json()
             
             # query = "INSERT INTO  items VALUES(?, ?)" 
             # cursor.execute(query, (item['name'], item['price']))
