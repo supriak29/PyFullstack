@@ -1,4 +1,4 @@
--- **	Sakila	DB QUERIES ***
+-- **	Sakila	***
 
 -- 1a. Display the first and last names of all actors from the table actor.
 select first_name, last_name from actor;
@@ -275,33 +275,10 @@ order by count(inventory.inventory_id) desc;
 
 -- 7f. Write a query to display how much business, in dollars, each store brought in.
 
+select * from payment;
+
 select store.store_id, sum(payment.amount) from store
 inner join staff on store.store_id = staff.store_id
 inner join payment on staff.staff_id = payment.staff_id
 group by store.store_id;
-
--- 7g. Write a query to display for each store its store ID, city, and country.
-
-select store.store_id, city, country
-from store
-inner join customer on store.store_id = customer.store_id
-inner join address on address.address_id = customer.address_id
-inner join city on city.city_id = address.city_id
-inner join country on country.country_id = city.country_id;
-
--- 7h. List the top five genres in gross revenue in descending order. (Hint: you may need to use the following 
--- tables: category, film_category, inventory, payment, and rental.)
-
-select payment_id, rental_id, amount from payment order by rental_id desc;
-select category_id, name from category;
-
-select rental.rental_id, category.category_id, category.name, sum(payment.amount) from category
-inner join film_category on category.category_id = film_category.category_id
-inner join inventory on film_category.film_id = inventory.film_id
-inner join rental on inventory.inventory_id = rental.inventory_id
-inner join payment on rental.rental_id = payment.rental_id
-group by category.name
-order by sum(payment.amount) desc
-limit 5;
-
 

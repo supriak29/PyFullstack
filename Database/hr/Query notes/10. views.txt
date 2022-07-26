@@ -1,3 +1,5 @@
+(views_to_check.sql)
+
 # VIEWS
 
 # Virtual Tables

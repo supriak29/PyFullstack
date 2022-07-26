@@ -1,17 +1,24 @@
+(logical_operators.sql)
+
 # LOGICAL OPERATORS
 
 ######### AND  
 select employee_id, first_name, last_name, salary from employees where salary > 5000 and salary < 7000 order by salary;
+
+
 
 ######### OR
 select employee_id, first_name, last_name, salary from employees where salary = 5000 OR salary = 7000 order by salary;
 select employee_id, first_name, last_name, salary from employees where salary = 8000 OR salary = 7000 order by salary;
 
 
+
 ######### BETWEEN
 # This operator searches for value that are within a set of values, given the min & max values.
 # These values also include the min & max values.
 select employee_id, first_name, last_name, salary from employees where salary between 9000 and 10000 order by salary;
+
+
 
 ######### IN
 # This operator compares a value to a list of specified values
@@ -26,11 +33,12 @@ select employee_id, first_name, last_name, department_id from employees where de
 select employee_id, first_name, last_name from employees where first_name in ("Lex","Jack","John");
 select employee_id, first_name, last_name from employees where first_name = "Lex" or first_name="Jack" or first_name="John" or last_name="Grant";
 
+
 ######### LIKE
 # This operator compares a value to similar value using wild card operator.
 # SQL provides 2 wild cards:
-# 1. %  (percentage sign): represents zero, one or multiple character
-# 2. _ (underscore): represents a single character
+# 1. % ---- (percentage sign) represents zero, one or multiple character
+# 2. _ ---- (underscore) represents a single character
 
 # first name starting with first 2 characters as "jo"
 select employee_id, first_name, last_name from employees where first_name like 'jo%' order by first_name;
@@ -44,6 +52,8 @@ select employee_id, first_name, last_name from employees where first_name like '
 # first name that has it's 4th character as 'a' as 3 underscore is used
 select employee_id, first_name, last_name from employees where first_name like '___a%' order by first_name;
 
+
+
 ######### ALL
 # This operator compares a value to all values in another value set
 
@@ -53,7 +63,9 @@ where salary >= ALL (select salary from employees where department_id = 8)
 order by salary desc;
 
 
+
 ######### ANY
+
 # This operator compares a value to any value in a set according to the condition.
 
 # (normal query)

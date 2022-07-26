@@ -1,3 +1,5 @@
+(comparison_operators.sql)
+
 # COMPARISON OPERATORS
 
 ################# Equal to operator (=)
@@ -24,3 +26,6 @@ select employee_id, first_name, last_name, department_id from employees where de
 
 ################# Less than Equal to (<=)
 select employee_id, first_name, last_name, department_id from employees where department_id <= 8 order by department_id;
+
+
+

@@ -1,3 +1,5 @@
+(stored_procedures.sql)
+
 # STORED PROCEDURE in SQL
 
 # A procedure (often called as stored procedure) is a subroutine like a sub-program in a regular flow.
@@ -31,7 +33,3 @@ show tables;  # will only show the tables only if a database is selected
 # USER-DEFINED stored procedures
 call show_employees;
 call left_join;
-
-
-
-

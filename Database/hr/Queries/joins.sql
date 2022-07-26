@@ -1,4 +1,13 @@
+# Process of linking tables is called joining
+# SQL provides many kinds of joins: 	1. INNER join
+#										2. LEFT join
+#                                       3. RIGHT join
+#                                       4. FULL OUTER join
+#                                       etc.
+									
 
+
+########################################################################################
 
 select first_name, last_name, employees.department_id, departments.department_name 
 from employees inner join departments
