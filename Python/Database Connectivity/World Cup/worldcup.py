@@ -31,7 +31,7 @@ def updateData():
 6. Location
 7. Toss WOn
 8. Match Won""")
-    chstr = input("Enter you choice comma seperated")
+    chstr = input("Enter your choice comma seperated")
     chlst = chstr.split(",")
     for i in chlst:
         if int(i)==1:

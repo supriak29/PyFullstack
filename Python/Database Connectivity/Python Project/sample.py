@@ -1,69 +1,23 @@
-import pymysql
-import bcrypt
-from validation import Validate
-from menu import userMenu
+from cryptography.fernet import Fernet
 
-con = pymysql.connect(host="localhost",user="root", password="",
-                      database="usermanagement")
-cur = con.cursor()
+key = Fernet.generate_key()
+print("key: ",key)
+print("Key decode() : ", key.decode())
+print()
 
-def register():
-    """
-        user registration process takes place in this method
-        successfully validated user gets to register
-        else the user is sent back to menu to select his/her options
-    """
-    
-    fname = input("Enter your first name: ")
-    lname = input("Enter your last name: ")
-    name = Validate.nameValidate(fname,lname)
-    if name is not None:
-        email = input("Enter your email id: ")
-        email = Validate.emailCheck(email)
-        if email is not None:
-            mobile = input("Enter your mobile no.: ")
-            chk_mobile = Validate.mobileValidate(mobile)
-            if chk_mobile is not None:
-                username = input("Enter your username: ")
-                uname = Validate.unameValidate(username)
-                if uname is not None:
-                    pwd = input("Set password: ")
-                    cpwd = input("Confirm password: ")
-                    password = Validate.pwdValidate(pwd,cpwd)
-                    if password is not None:
-                        #converting into hash value
-                        hashpwd = bcrypt.hashpw(password,bcrypt.gensalt())
-                        dob = input("\nEnter your birth-date [yyyy-mm-dd]: ")
-                        if dob is not None:
-                            print("good")
-    
-        
+f = Fernet(key)
+print("fernet: ",f)
 
-register()
+def encPwd():
+    pwd = bytes(input("Enter password: "),'utf-8')
+    encrypted_data = f.encrypt(pwd)
+    print("After encryption : ", encrypted_data)
+    return encrypted_data
 
+def decPwd(encrypted_data):
+    decrypted_data = f.decrypt(encrypted_data)
+    print(decrypted_data)
+    print("After decryption : ", decrypted_data.decode())
 
-
-
-'''
-        1. fname, lname
-        2. email
-        3. mobile
-        4. username
-        5. pwd, cpwd
-    6. dob 
-'''
-
-
-
-
-# Proper mobile validation pending
-# email validation needs to be upgraded 
-
-
-
-##from faker import Faker
-##fake = Faker()
-##
-##print(fake.name(),"\n")
-##print(fake.email(),"\n")
-##print(fake.address())
+encrypted_data = encPwd()
+decPwd(encrypted_data)

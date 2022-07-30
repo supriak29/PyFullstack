@@ -1,0 +1,12 @@
+updateData():
+	-> user enters email 
+	
+	1. Option 1
+	-> do otp verification
+		. if otp correct then proceed with verification
+
+	2. Option 2:
+	-> user also enters password
+	-> chk if respective email & passwords match
+		. if match then proceed
+		. else msg "email & pwd do not match"

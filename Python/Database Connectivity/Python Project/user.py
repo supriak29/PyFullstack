@@ -1,126 +1,173 @@
 import pymysql
 import bcrypt
-import smtplib
-import random as r
-from email.mime.multipart import MIMEMultipart
-from email.mime.text import MIMEText
-#from registration import register
-from update import updateData
-#from Login import login
-##from view import viewData
 from validation import Validate
+from otp_email import *
 
 con = pymysql.connect(host="localhost",user="root", password="",
                       database="usermanagement")
 print("Database connected.")
 cur = con.cursor()
-# ----------------------------------------------
 
 def register():
-    fname = input("Enter first name: ")
-    lname = input("Enter last name: ")
-    # keeping the names in proper format
+    """
+        user registration process takes place in this method
+        successfully validated user gets to register
+        else the user is sent back to menu to select his/her options
+    """
+    
+    fname = input("Enter your first name: ")
+    lname = input("Enter your last name: ")
     fname = fname.title()
     lname = lname.title()
     
-    username = input("Enter username: ")
-    mobile = input("Enter mobile number: ")
-    date = input("Enter date(yyyy-mm-dd): ")
-    pwd = input("Enter pwd: ")
-    cpwd = input("Confirm pwd: ")
-##    pwd = bytes(input("Enter password: "),'utf-8')
-##    cpwd = bytes(input("Confirm password: "),'utf-8')
-
-    
-    email = input("Enter email id: ")
-    if "@gmail.com" in email:
-        # select the row having that particular email id
-        select_query = "select * from user where email=%s"
-        chk_email = cur.execute(select_query,(email,))
-
-    # checking if the user already exists using email id
-        try:
-            if chk_email == 0:
-                print("User with {} email id already exists".format(email))
-            #fname,lname,username,emailD,mobile,pwd,reg_date = cur.fetchone() 
-            #if emailD is not None:
-                print("User already Exists!")
-        except Exception as e:
-            # when user is not yet signed up, proceed with registration below:
-
-            # password validation
-            pwd = Validate.pwdValidate(pwd,cpwd)
-
-            # mobile validate
-            mobile = Validate.mobileValidate(mobile)
-
-            # username validate
-            username = Validate.unameValidate(username)
-            if username is not None:
-                if username is not None:
-                    if pwd is not None:
-                        pwd =(bytes(pwd,'utf-8'))
+    name = Validate.nameValidate(fname,lname)
+    if name is not None:
+        email = input("Enter your email id: ")
+        chkemail = Validate.emailCheck(email)
+        if chkemail is None:
+            mobile = input("Enter your mobile no.: ")
+            chk_mobile = Validate.mobileValidate(mobile)
+            if chk_mobile is not None:
+                username = input("Create your username: ")
+                uname = Validate.unameValidate(username)
+                if uname is not None:
+                    pwd = input("Set password: ")
+                    cpwd = input("Confirm password: ")
+                    password = Validate.pwdValidate(pwd,cpwd)
+                    if password is not None:
                         #converting into hash value
-                        hashpwd = bcrypt.hashpw(pwd,bcrypt.gensalt())
-                        insert_query = """insert into user
-                            (fname, lname, username, email, mobile, password,reg_date)
-                            values(%s, %s, %s, %s, %s, %s, %s)"""
-                        user_info = (fname,lname,username,email,mobile,hashpwd,date)
-
-                        # --------- GENERATING OTP ------------------
-                        def otpgen():
-                            otp=""
-                            for i in range(4):
-                                otp+=str(r.randint(1,9))
-                            return otp
-                        # -------------------------------------------
-
-                        otp = otpgen()
-                        print("\nPlease check your email for verification code.\n")
-                        # send user message: Successfully Registered:
-                        
-                        msg = MIMEMultipart()
-                        msg['From'] = 'supriyakarkera29@gmail.com'
-                        #msg['To'] = 'supria29.k@gmail.com'
-                        msg['To'] = email
-                        msg['Subject'] = 'simple email in python'
-                        message = 'Verification code: {}'.format(otp)
-                        msg.attach(MIMEText(message))
-
-                        mailserver = smtplib.SMTP('smtp.mailtrap.io',587)
-                        # identify ourselves to smtp gmail client
-                        mailserver.ehlo()
-                        # secure our email with tls encryption
-                        mailserver.starttls()
-                        # re-identify ourselves as an encrypted connection
-                        mailserver.ehlo()
-                        mailserver.login('4a02cd1127338d', '0b937d713f0ae3')
-
-                        mailserver.sendmail('supriyakarkera29@gmail.com','supria29.k@gmail.com',msg.as_string())
-
-                        mailserver.quit()
-                            
-                        # -------- Sending Email ends here -------------------
-                        
-                        c = 1
-                        x = 3
-                        for c in range(1,4):
-                            b = input("\nEnter Verification code: ")
-                            if b == otp:
+                        hashpwd = bcrypt.hashpw(password,bcrypt.gensalt())
+                        dob = str(input("\nEnter your birth-date [yyyy-mm-dd]: "))
+                        date = Validate.dobValidate(dob)
+                        if date is not None:
+                            result = verifyOtp(email)
+                            if result is not None:
                                 print("\ncode is correct")
+                                insert_query = """insert into user(fname, lname, username, email,
+                                                                    mobile, password, date_of_birth)
+                                                              values(%s, %s, %s, %s, %s, %s, %s)"""
+                                user_info = (fname,lname,username,email,mobile,hashpwd,dob)
                                 cur.execute(insert_query,user_info)
                                 con.commit()
                                 print("\nSuccessfully Registered.\n")
+            else:
+                print("\nInvalid mobile number!\n")
+
+def viewData(email):
+    select_query = "select * from user where email=%s"
+    cur.execute(select_query,(email,))
+    fname,lname,uname,email,mobile,password,dob = cur.fetchone()
+
+    print("\n\n***** Your Credentials *****\n")
+    print("1. First name: ", fname)
+    print("2. Last name: ", lname)
+    print("3. Username: ", uname)
+    print("4. Email ID: ", email)
+    print("5. Password(encrypted): ", password)
+    print("6. Date of Birth: ", dob,"\n")
+
+
+def updateData():
+#    viewData()
+    result = not None
+    email = input("Enter existing email:")
+    chkemail = Validate.emailCheck(email)
+
+    try:
+        if chkemail is not None:
+            otp = verifyOtp(email)
+            if otp is not None:
+                viewData(email)
+                
+                select_query="select * from user where email = %s"
+                cur.execute(select_query, (email,))
+                fname, lname, uname, emailD, mobile, password, dob = cur.fetchone()
+
+                
+                print(""" Enter nos that you wanna modify:
+            1. first name
+            2. last name
+            3. username
+            4. email
+            5. mobile
+            6. password
+            7. dob """)
+                chstr = input("Enter your choice comma seperated: ")
+                chlst = chstr.split(",")
+                for i in chlst:
+                    if int(i)==1:
+                        fname = input("Enter new first name: ")
+                        fname = fname.title()
+                        name = Validate.nameValidate(fname,"")
+                        if name is None:
+                            result = None
+                            break
+                    elif int(i)==2:
+                        lname = input("Enter new last Name: ")
+                        lname = lname.title()
+                        name = Validate.nameValidate("",lname)
+                        if lname is None:
+                            result = None
+                            break
+                    elif int(i)==3:
+                        uname = input("Update username: ")
+                        chk_uname = Validate.unameValidate(uname)
+                        if chk_uname is None:
+                            result = unameValidate(uname)
+                            if result is None:
                                 break
-                            else:
-                                x -= 1 
-                                print("Wrong code. {} attempt remaining".format(x))
-                                c += 1
-                                continue
-                        if c > 3:
-                            print("3 attempts over! Code expired!")
-    else:
-        print("Not a Valid Email")
+                    elif int(i)==4:
+                        email = input("Update email: ")
+                        chkemail = Validate.emailCheck(email)
+                        if chkemail is False:
+                            result = None
+                            break
+                    elif int(i)==5:
+                        mobile = input("Update mobile no: ")
+                        chk_mobile = Validate.mobileValidate(mobile)
+                        if chk_mobile is None:
+                            result=None
+                            break
+                    elif int(i)==6:
+                        password = input("Set new password: ")
+                        cpassword = input("Confirm password: ")
+                        chkpwd = Validate.pwdValidate(password,cpassword)
+                        print("chkpwd: ",chkpwd)
+                        if chkpwd is None:
+                            result=None
+                            break
+                        else:
+                            hashpwd = bcrypt.hashpw(chkpwd,bcrypt.gensalt())
+                            print("hashpwd: ",hashpwd)
+                    elif int(i)==7:
+                        dob = input("enter dob: ")
+
+                if result is None:
+                    print("Unable to update!")
+                else:
+                    update_query = """update user set fname = %s, lname =%s,
+                    username=%s, email =%s, mobile=%s, password = %s, date_of_birth=%s
+                        where email = %s;"""
+                    update_values = (fname, lname, uname, email,mobile,hashpwd,dob,emailD)
+                    cur.execute(update_query, update_values)
+                    con.commit()
+                    print("\nProfile Updated!")
+
+                    # display updated credentials:
+                    print("\n**** UPDATED CREDENTIALS ***\n")
+                    print("1. First name: ", fname)
+                    print("2. Last name: ", lname)
+                    print("3. Username: ", uname)
+                    print("4. Email ID: ", email)
+                    print("5. Mobile No.: ",mobile)
+                    print("6. Password(encrypted): ", password)
+                    print("7. Date of Birth: ", dob,"\n")
+                    
+        else:
+            print("User does not exist!\n")
+    except:
+        print("Update Failed!\n")
+
         
 # ----------------------------------------------
 
@@ -152,17 +199,18 @@ def register():
 ##        print("You are not Registered! Please Signup.")
 
 
-# ----------------------------------------------
+# USER-MENU:
 
 while True:
-        print("""Enter choice:
-1. Register
-2. Login
-3. Forgot Password
-4. Update Data
-5. View Data
-6. Quit""")
-        ch = int(input("Enter your choice:"))
+    print("""User Menu:
+            1. Register
+            2. Login
+            3. Forgot Password
+            4. Update Data
+            5. View Data
+            6. Quit""")
+    try:
+        ch = int(input("\nEnter your choice:"))
         if ch==1:
             register()
         elif ch==2:
@@ -172,9 +220,18 @@ while True:
         elif ch==4:
             updateData()
         elif ch==5:
-            viewData()
+            print("\nVerification required..\n")
+            email = input("Enter your registered email id: ")
+            chkemail = Validate.emailCheck(email)
+            if email is not None:
+                otp = verifyOtp(email)
+                if otp is not None:
+                    viewData(email)
         elif ch == 6:
             break
         else:
-            print("Wrong Input")
-con.close()
+            print("\nelse: Wrong Input!\n") # this is when user enters a no. not mentioned above
+    except:
+        print("\ncatch: Wrong Input!\n") # this is when user enters something other than a no.
+
+con.close() # close the database connection

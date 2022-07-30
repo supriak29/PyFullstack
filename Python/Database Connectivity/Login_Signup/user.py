@@ -158,7 +158,7 @@ def updateData():
 
     update_query = """update user set fname=%s, lname=%s,
 username=%s, email=%s, mobile=%s, password=%s"""
-    update_values = (fname,lname,username,email,password)
+    update_values = (fname,lname,username,email,mobile, password)
     cur.execute(update_query, update_values)
     con.commit()
 # ----------------------------------------------

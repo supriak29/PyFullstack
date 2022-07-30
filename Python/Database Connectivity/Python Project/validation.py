@@ -1,28 +1,36 @@
-# Validate username
+# Validate
+
 import phonenumbers
 import pymysql
-import datetime
-from menu import userMenu
+from datetime import datetime
+import re
 
 con = pymysql.connect(host="localhost",user="root", password="",
                       database="usermanagement")
 cur = con.cursor()
 
 class Validate:
-
+    '''
+        This class performs validations functions on:
+            Name of the user
+            Email
+            Mobile No.
+            Username
+            Password
+            Date of Birth
+    '''
     def nameValidate(first,last):
         fname = first
         lname = last
-        fname = fname.title()
-        lname = lname.title()
         name = fname+lname
         count=0
         for i in name:
-            if i.isdigit():
+            if i.isdigit() or i=='$' or i=='_' or i=='@' or i=='#':
                 count+=1
         if count>0:
-            print("\nDigits not allowed in name.\n")
-            userMenu()
+            print("\nDigits or special character not allowed in name.\n")
+            #userMenu()
+            return None
         else:
             return not None
 
@@ -32,36 +40,38 @@ class Validate:
             select_query = "SELECT *FROM user WHERE email=%s"
             result = cur.execute(select_query,(email,))
             if result==1:
-                print("\nUser with {} email id already exists.".format(email),"\n")
-                userMenu()
+                # user exists
+                print("\nUser with {} email id exists...".format(email),"\n")
+                #userMenu()
+                return not None
             else:
+                # user does not exist
+                # needs registration
                 count=0
+
                 for i in email:
+                    # validate
                     if i.isspace():
                         count+=1
                 if count>0:
-                    print("\nInvalid Email ID.\n")
-                    userMenu()
+                    # invalid email
+                    print("\nInvalid Email ID.")
+                    return False
+                    
                 else:
-                    # proceed with registration
-                    return not None
+                    # valid email, proceed with registration
+                    return None
         else:
-            print("\nInvalid Email ID.\n")
-            userMenu()
+            print("\nInvalid Email ID.")
+            #userMenu()
+            return None
         
     def mobileValidate(num):
-        mobile = num
-        mobile = '+'+mobile
-        try:
-            contact = phonenumbers.parse(mobile)
-            if phonenumbers.is_possible_number(contact):
-                return not None
-            else:
-                print("\nInvalid mobile number\n")
-                userMenu()
-        except Exception as e:
-            print("\nAn Error occured!\n")
-            userMenu()
+        # 1) Begins with 0 or 91
+        # 2) Then contains 7 or 8 or 9.
+        # 3) Then contains 9 digits
+        Pattern = re.compile("(0|91)?[7-9][0-9]{9}")
+        return Pattern.match(num)
 
 
     def unameValidate(username):
@@ -70,7 +80,7 @@ class Validate:
             Should not have more than 8 characters
             Should not have special characters like @ # $ %
 
-            username >= 3 and username <= 8 characters
+            username >= 3 and username <= 10 characters
             Might contain _underscore or digits(0-9)
             Should have letters(a-z) - all small
             Convert the username to small letters if captital
@@ -79,7 +89,7 @@ class Validate:
         uname = uname.lower()
         l = len(uname)
 
-        if l>=3 and l<=20:
+        if l>=3 and l<=15:
             if uname!='&' and uname!='@' and uname!='%' and uname!='*':
                 if uname[-1]!='.':
                     uname = uname.lower()
@@ -91,16 +101,20 @@ class Validate:
                         return uname
                     else:
                         print("\nusername already exists!\n")
-                        userMenu()
+                        #userMenu()
+                        return None
                 else:
                     print("\nUsername cannot end with a period\n")
-                    userMenu()
+                    #userMenu()
+                    return None
             else:
                 print("\nUsername can only contain letters, numbers, underscore & period.\n")
-                userMenu()
+                #userMenu()
+                return None
         else:
-            print("\nInvalid length of username\n")
-            userMenu()
+            print("\nUsername length can vary from 3-15 only.\n")
+            #userMenu()
+            return None
 
 
     def pwdValidate(password,cpassword):
@@ -130,47 +144,37 @@ class Validate:
                 password = bytes(pwd,'utf-8')
                 return password
             else:
-                print("Invalid password")
-                userMenu()
+                print("\nPassword should contain atleast 8 characters, 1 upper case, 1 lower case, 1 special character and 1 digit.\n")
+                #userMenu()
+                return None
         else:
-            print("Passwords don't match.")
-            userMenu()
+            print("\nPasswords don't match!\n")
+            #userMenu()
+            return None
+
 
     def dobValidate(dob):
         '''
             format: YYYY-MM-DD
         '''
-        #dob = '2018-06-29'
-        dob = dob.replace('-','/')
-        dob = datetime.datetime.strptime(dob, '%Y/%m/%d')
-        print(dob)
-        if dob:
-            birthdate = str(dob)
-            count=0
-            print(birthdate)
-            
-            for i in birthdate:
-                if i.isalpha():
-                    count+=1
-            if count==0:
-                # edit birthdate pending
-                return birthdate
-            else:
-                print("Invalid date!")
-                userMenu()
+        try:
+            date = dob
+            my_date = datetime.strptime(date, "%Y-%m-%d")
+            my_date=str(my_date)
+            date=''
+            for i in my_date:
+                if i==' ':
+                    break
+                else:
+                    date+=i
+            return date
+        except:
+            print("\nInvalid date format!\n")
+            #userMenu()
+            return None
+ 
 
-Validate.dobValidate("2002/09/08")
 #---------------------------------------------------------------
-##con = pymysql.connect(host="localhost",user="root", password="",
-##                      database="usermanagement")
-##print("Database connected.")
-##cur = con.cursor()
-##
-##uname = input("Enter username: ")
-##
-##select_query = "select * from user where username=%s"
-##name = cur.execute(select_query,(uname,))
-##
-### if name=1, TRUE [not in db]
-### if name=0, FALSE [not in db]
-##print(name)
+# if name=1, TRUE [not in db]
+# if name=0, FALSE [not in db]
+
