@@ -111,7 +111,17 @@ where actor_id=172;
 
 
 -- 5a. You cannot locate the schema of the address table. Which query would you use to re-create it?
-create table address;
+create table address(
+	address_id int(5) primary key,
+    address varchar(50),
+    address2 varchar(50),
+    district varchar(50),
+    city_id int(5),
+    postal_code varchar(10),
+    phone varchar(20),
+    last_update timestamp,
+    foreign key(city_id) references city(city_id)    
+);
 
 
 -- 6a. Use JOIN to display the first and last names, as well as the address, of each staff member. Use the tables staff and address:
