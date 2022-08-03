@@ -68,16 +68,15 @@ def viewData(email):
 
 
 def updateData():
-#    viewData()
     result = not None
-    email = input("Enter existing email:")
+    email = input("Enter email:")
     chkemail = Validate.emailCheck(email)
 
     try:
         if chkemail is not None:
             otp = verifyOtp(email)
             if otp is not None:
-                viewData(email)
+                #viewData(email)
                 
                 select_query="select * from user where email = %s"
                 cur.execute(select_query, (email,))
@@ -92,53 +91,47 @@ def updateData():
             5. mobile
             6. password
             7. dob """)
+                
                 chstr = input("Enter your choice comma seperated: ")
                 chlst = chstr.split(",")
+
                 for i in chlst:
                     if int(i)==1:
-                        fname = input("Enter new first name: ")
+                        fname = input("Enter first name: ")
                         fname = fname.title()
                         name = Validate.nameValidate(fname,"")
+                        print("name: ",name)
                         if name is None:
                             result = None
                             break
                     elif int(i)==2:
-                        lname = input("Enter new last Name: ")
+                        lname = input("enter last Name: ")
                         lname = lname.title()
                         name = Validate.nameValidate("",lname)
                         if lname is None:
                             result = None
                             break
                     elif int(i)==3:
-                        uname = input("Update username: ")
+                        uname = input("enter username: ")
                         chk_uname = Validate.unameValidate(uname)
                         if chk_uname is None:
                             result = unameValidate(uname)
                             if result is None:
                                 break
                     elif int(i)==4:
-                        email = input("Update email: ")
+                        email = input("enter email: ")
                         chkemail = Validate.emailCheck(email)
                         if chkemail is False:
                             result = None
                             break
                     elif int(i)==5:
-                        mobile = input("Update mobile no: ")
+                        mobile = input("enter mobile no: ")
                         chk_mobile = Validate.mobileValidate(mobile)
                         if chk_mobile is None:
                             result=None
                             break
                     elif int(i)==6:
-                        password = input("Set new password: ")
-                        cpassword = input("Confirm password: ")
-                        chkpwd = Validate.pwdValidate(password,cpassword)
-                        print("chkpwd: ",chkpwd)
-                        if chkpwd is None:
-                            result=None
-                            break
-                        else:
-                            hashpwd = bcrypt.hashpw(chkpwd,bcrypt.gensalt())
-                            print("hashpwd: ",hashpwd)
+                        password = input("enter password: ")
                     elif int(i)==7:
                         dob = input("enter dob: ")
 
@@ -148,7 +141,7 @@ def updateData():
                     update_query = """update user set fname = %s, lname =%s,
                     username=%s, email =%s, mobile=%s, password = %s, date_of_birth=%s
                         where email = %s;"""
-                    update_values = (fname, lname, uname, email,mobile,hashpwd,dob,emailD)
+                    update_values = (fname, lname, uname, email,mobile,password,dob,emailD)
                     cur.execute(update_query, update_values)
                     con.commit()
                     print("\nProfile Updated!")
@@ -164,39 +157,12 @@ def updateData():
                     print("7. Date of Birth: ", dob,"\n")
                     
         else:
-            print("User does not exist!\n")
+            print("user does not exist!")
     except:
-        print("Update Failed!\n")
+        print("Update Failed!")
 
         
 # ----------------------------------------------
-
-##def login():
-##    email = input("Enter Email id: ")
-##    password = input("Enter Password: ")
-##
-##    password = password
-##    
-##    # checking if the user already exists using email id
-##    try:
-##        select_query = "select * from user where email=%s"
-##        cur.execute(select_query,(email,))
-##        fname,lname,username,emailD,mobile,pwdD,reg_date = cur.fetchone()
-##        print(pwdD)
-##        print(password)
-####        try:
-####            a = bcrypt.checkpw(password,hashed)
-####            print(a)
-####        except Exception e:
-####            print("Exception after bcrypt")
-####
-##        if emailD is not None:
-##            if pwdD == password:
-##                print("\nLogged in successfullly!\n")
-##            else:
-##                print("Wrong Password")
-##    except Exception as e:
-##        print("You are not Registered! Please Signup.")
 
 
 # USER-MENU:

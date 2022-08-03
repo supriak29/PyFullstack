@@ -1,5 +1,14 @@
+import pymysql
+from validation import Validate
+from otp_email import *
+from user import viewData
+
+con = pymysql.connect(host="localhost",user="root", password="",
+                      database="usermanagement")
+print("Database connected.")
+cur = con.cursor()
+
 def updateData():
-#    viewData()
     result = not None
     email = input("Enter email:")
     chkemail = Validate.emailCheck(email)
@@ -8,7 +17,7 @@ def updateData():
         if chkemail is not None:
             otp = verifyOtp(email)
             if otp is not None:
-                viewData(email)
+                #viewData(email)
                 
                 select_query="select * from user where email = %s"
                 cur.execute(select_query, (email,))
@@ -23,13 +32,16 @@ def updateData():
             5. mobile
             6. password
             7. dob """)
+                
                 chstr = input("Enter your choice comma seperated: ")
                 chlst = chstr.split(",")
+
                 for i in chlst:
                     if int(i)==1:
                         fname = input("Enter first name: ")
                         fname = fname.title()
                         name = Validate.nameValidate(fname,"")
+                        print("name: ",name)
                         if name is None:
                             result = None
                             break
@@ -89,3 +101,5 @@ def updateData():
             print("user does not exist!")
     except:
         print("Update Failed!")
+
+updateData()
